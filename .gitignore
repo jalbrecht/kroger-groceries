@@ -1,0 +1,7 @@
+.env
+.kroger-token.json
+node_modules/
+.DS_Store
+DIET_PREFERENCES.md
+lists/*
+!lists/.gitkeep
