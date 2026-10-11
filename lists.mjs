@@ -125,7 +125,12 @@ function page(title, nav, body) {
 const server = http.createServer((req, res) => {
   const files = listFiles();
   const url = new URL(req.url, 'http://localhost');
-  let name = decodeURIComponent(url.pathname.slice(1));
+  let name;
+  try {
+    name = decodeURIComponent(url.pathname.slice(1));
+  } catch {
+    name = null; // malformed escape like /%E0%A4%A: 404 instead of crashing
+  }
   if (!name && files.length) name = files[0].replace(/\.md$/, '');
 
   const nav = files.map((f) => {
