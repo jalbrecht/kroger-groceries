@@ -1,0 +1,12 @@
+{
+  "name": "kroger-weekly-groceries",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lists": "node lists.mjs",
+    "start": "node lists.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

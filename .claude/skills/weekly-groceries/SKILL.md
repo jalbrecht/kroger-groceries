@@ -77,6 +77,15 @@ Then ask the user to approve or swap. **Do not add anything to the cart until th
 
 Then tell the user what was added, and remind them to open ralphs.com or the app, pick a delivery time and check out.
 
+## 6b. Offer to check coupons
+
+The public API has no coupons endpoint. Search only shows sale prices (`promo`). After adding to the cart, ask the user whether to check digital coupons on ralphs.com in their browser, where they're already signed in. If they agree:
+
+- Use the browser tools to open ralphs.com → Savings → Digital Coupons, and look for coupons matching items in this week's list (search by brand and product).
+- Also note store-brand deals or weekly digital deals on close alternatives worth swapping in.
+- Show what you found (item, coupon, savings) and **ask before clipping**. Clip only the ones the user approves. Clipped coupons apply automatically at checkout.
+- Never check out, change the delivery slot or edit account settings.
+
 ## 7. Save the week
 
 Write `lists/YYYY-MM-DD.md`, using the date the list was added, containing the meal plan, recipes and final shopping list (with prices and total). Before planning a new week, read the last two or three files in `lists/` so meals don't repeat too often, and reuse the ones the user liked.

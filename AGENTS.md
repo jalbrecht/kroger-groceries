@@ -20,6 +20,8 @@ A typical request is "here's what I want to cook this week" or "build my weekly 
 | File | Committed | Purpose |
 |---|---|---|
 | `kroger.mjs` | yes | The only tool: login, search, add to cart, profile. No dependencies, Node 20+ |
+| `lists.mjs` | yes | Local web viewer for `lists/` as a recipe guide (`npm run lists`, http://localhost:3001). No dependencies |
+| `package.json` | yes | Only holds the `npm run lists` script |
 | `AGENTS.md` | yes | This file |
 | `.claude/skills/weekly-groceries/SKILL.md` | yes | The weekly meal plan and shopping workflow. Follow it for any weekly-list or meal-plan request |
 | `DIET_PREFERENCES.example.md` | yes | Blank template for `DIET_PREFERENCES.md` |
@@ -57,6 +59,7 @@ node --env-file=.env kroger.mjs search "<term>" [limit]   # JSON: upc, descripti
 node --env-file=.env kroger.mjs add <upc:qty> [<upc:qty> ...]  # adds to cart with modality DELIVERY
 node --env-file=.env kroger.mjs profile                   # confirms the login token works (returns account id)
 node --env-file=.env kroger.mjs login                     # one-time browser login
+npm run lists                                             # recipe/list viewer at http://localhost:3001
 ```
 
 - `search` uses an app token (`client_credentials`, scope `product.compact`). It doesn't need the owner's login.
