@@ -9,6 +9,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import { execFile } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
 
 const API = 'https://api.kroger.com/v1';
 const REDIRECT_URI = 'http://localhost:3000/callback';
@@ -54,15 +55,20 @@ async function appToken() {
 }
 
 function login() {
+  // Random state ties the callback to this login attempt (OAuth CSRF protection)
+  const state = randomBytes(16).toString('hex');
   const url = `${API}/connect/oauth2/authorize?` + new URLSearchParams({
     scope: 'cart.basic:write profile.compact',
     response_type: 'code',
+    state,
     client_id: CLIENT_ID,
     redirect_uri: REDIRECT_URI,
   });
   const server = http.createServer(async (req, res) => {
     const reqUrl = new URL(req.url, REDIRECT_URI);
     if (reqUrl.pathname !== '/callback') return res.writeHead(404).end();
+    // Ignore callbacks that didn't come from this login attempt, and keep waiting for the real one
+    if (reqUrl.searchParams.get('state') !== state) return res.writeHead(400).end('Invalid state');
     const code = reqUrl.searchParams.get('code');
     try {
       if (!code) throw new Error(reqUrl.searchParams.get('error_description') || reqUrl.searchParams.get('error') || 'No code returned');
@@ -76,7 +82,7 @@ function login() {
     }
     server.close();
   });
-  server.listen(3000, () => {
+  server.listen(3000, '127.0.0.1', () => {
     console.log(`Opening browser for Kroger login...\n${url}`);
     execFile('open', [url]);
   });

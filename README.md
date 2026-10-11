@@ -107,3 +107,5 @@ These files hold your keys, login, health targets and spending. They're gitignor
 | `.env.example` | Template for your keys |
 
 Not affiliated with Kroger or any of its stores.
+
+[![Built on Xano](https://img.shields.io/badge/built_on-Xano-0055FF)](https://xano.com)
